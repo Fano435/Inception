@@ -26,5 +26,9 @@ echo "pasv_enable=YES" >> etc/vsftpd.conf
 echo "pasv_min_port=21000" >> /etc/vsftpd.conf
 echo "pasv_max_port=21010" >> /etc/vsftpd.conf
 
+#Eviter les connexions au reste du systeme par le shell
+usermod -s /bin/false
+/bin/false >> /etc/shells
+
 service vsftpd stop
 vsftpd /etc/vsftpd.conf

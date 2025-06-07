@@ -7,6 +7,7 @@ services:
       - "443:443"
     depends_on:
       - wordpress
+      - static-site
     volumes:
       - wordpress:/var/www/wordpress
     networks:
@@ -71,6 +72,14 @@ services:
     restart: on-failure
     env_file:
       - .env
+
+  static-site:
+    image: static-site
+    container_name: static-site
+    build: ./static-site
+    networks:
+      - inception
+
 
 volumes:
   mariadb:
