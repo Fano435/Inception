@@ -17,8 +17,7 @@ run :
 stop :
 	$(COMPOSE) down
 
-clear :
-	make stop
+clean :
 	docker image prune -a -f
 
 re :
