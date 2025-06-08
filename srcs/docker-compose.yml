@@ -1,3 +1,23 @@
+volumes:
+  mariadb:
+    name: mariadb
+    driver: local
+    driver_opts:
+      device: /home/jrasamim/data/mariadb
+      o: bind
+      type: none
+  wordpress:
+    name: wordpress
+    driver: local
+    driver_opts:
+      device: /home/jrasamim/data/wordpress
+      o: bind
+      type: none
+
+networks:
+  inception:
+    name: inception
+
 services:
   nginx:
     image: nginx:user
@@ -46,10 +66,12 @@ services:
       timeout: 5s
       retries: 10
 
+# BONUS
+
   redis:
     image: redis:user
     container_name: redis-cache
-    build: ./redis
+    build: ./requirements/bonus/redis
     depends_on:
       - nginx
     networks:
@@ -59,7 +81,7 @@ services:
   ftp:
     image: ftp:user
     container_name: ftp-server
-    build: ./ftp-server
+    build: ./requirements/bonus/ftp-server
     volumes:
       - wordpress:/home/$FTP_USER/ftp
     ports:
@@ -76,27 +98,20 @@ services:
   static-site:
     image: static-site
     container_name: static-site
-    build: ./static-site
+    build: ./requirements/bonus/static-site
+    networks:
+      - inception
+
+  adminer:
+    container_name: adminer
+    image: adminer:user
+    build: ./requirements/bonus/adminer
+    volumes:
+      - wordpress:/var/www/html
+    restart: always
+    depends_on:
+      - wordpress
     networks:
       - inception
 
 
-volumes:
-  mariadb:
-    name: mariadb
-    driver: local
-    driver_opts:
-      device: /home/jrasamim/data/mariadb
-      o: bind
-      type: none
-  wordpress:
-    name: wordpress
-    driver: local
-    driver_opts:
-      device: /home/jrasamim/data/wordpress
-      o: bind
-      type: none
-
-networks:
-  inception:
-    name: inception
