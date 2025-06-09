@@ -13,6 +13,7 @@ volumes:
       device: /home/jrasamim/data/wordpress
       o: bind
       type: none
+  portainer:
 
 networks:
   inception:
@@ -32,7 +33,7 @@ services:
       - wordpress:/var/www/wordpress
     networks:
       - inception
-    restart: always
+    restart: on-failure
 
   wordpress:
     image: wordpress:user
@@ -44,7 +45,7 @@ services:
       - .env
     networks:
       - inception
-    restart: always
+    restart: on-failure
     depends_on:
       mariadb:
         condition: service_healthy
@@ -59,7 +60,7 @@ services:
       - .env
     networks:
       - inception
-    restart: no
+    restart: on-failure
     healthcheck:
       test: ["CMD", "nc", "-zv", "mariadb", "3306"]
       interval: 1s
@@ -108,10 +109,19 @@ services:
     build: ./requirements/bonus/adminer
     volumes:
       - wordpress:/var/www/html
-    restart: always
+    restart: on-failure
     depends_on:
       - wordpress
     networks:
       - inception
 
-
+  portainer:
+    container_name: portainer
+    image: portainer:user
+    build: ./requirements/bonus/portainer
+    restart: on-failure
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer:/data
+    networks:
+      - inception
