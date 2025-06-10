@@ -115,17 +115,6 @@ services:
     networks:
       - inception
 
-  # portainer:
-  #   container_name: portainer
-  #   image: portainer:user
-  #   build: ./requirements/bonus/portainer
-  #   restart: on-failure
-  #   volumes:
-  #     - /var/run/docker.sock:/var/run/docker.sock
-  #     - portainer:/data
-  #   networks:
-  #     - inception
-
   cadvisor:
     container_name: cadvisor
     image: cadvisor:user
