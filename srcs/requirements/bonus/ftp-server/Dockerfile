@@ -5,7 +5,7 @@ RUN apt-get install vsftpd ftp -y
 
 # COPY .env /.env
 
-COPY ftp_config.sh /
+COPY ./tools/ftp_config.sh /
 RUN chmod +x ftp_config.sh
 
 EXPOSE 21 21000-21010
