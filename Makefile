@@ -1,7 +1,7 @@
 LOGIN = jrasamim
 COMPOSE = docker compose -f ./srcs/docker-compose.yml
 
-.PHONY : build run stop re
+.PHONY : build run stop re clear
 
 all : build
 
@@ -17,8 +17,9 @@ run :
 stop :
 	$(COMPOSE) down
 
-clean :
-	docker image prune -a -f
+clear :
+	make stop
+	docker system prune -af --volumes
 
 re :
 	make stop
