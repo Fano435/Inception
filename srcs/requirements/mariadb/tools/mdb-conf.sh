@@ -1,9 +1,5 @@
 #!/bin/bash
 
-# set -a
-# source .env
-# set +a
-
 service mariadb start
 sleep 5
 

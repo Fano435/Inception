@@ -1,6 +1,5 @@
 FROM alpine:3.21
 
-# Installer tini et busybox httpd
 RUN apk add --no-cache tini busybox-extras
 
 WORKDIR /var/www/

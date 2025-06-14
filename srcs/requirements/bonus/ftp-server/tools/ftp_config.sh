@@ -1,11 +1,6 @@
 #!/bin/bash
 
-# set -a
-# source .env
-# set +a
-
 mkdir -p /var/run/vsftpd/empty
-# cp /etc/vsftpd.conf /etc/vsftpd.conf.bak
 
 adduser $FTP_USER --disabled-password --gecos ""
 echo "$FTP_USER:$FTP_PASS" | chpasswd
@@ -26,7 +21,6 @@ echo "pasv_enable=YES" >> etc/vsftpd.conf
 echo "pasv_min_port=21000" >> /etc/vsftpd.conf
 echo "pasv_max_port=21010" >> /etc/vsftpd.conf
 
-#Eviter les connexions au reste du systeme par le shell
 usermod -s /bin/false
 /bin/false >> /etc/shells
 
